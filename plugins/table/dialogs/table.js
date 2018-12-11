@@ -29,22 +29,6 @@
 		return maxCols;
 	}
 
-
-	// Whole-positive-integer validator.
-	function validatorNum( msg ) {
-		return function() {
-			var value = this.getValue(),
-				pass = !!( CKEDITOR.dialog.validate.integer().call( this, value ) && value > 0 );
-
-			if ( !pass ) {
-				alert( msg ); // jshint ignore:line
-				this.select();
-			}
-
-			return pass;
-		};
-	}
-
 	function tableDialog( editor, command ) {
 		var makeElement = function( name ) {
 				return new CKEDITOR.dom.element( name, editor.document );
@@ -265,7 +249,7 @@
 							label: editor.lang.table.rows,
 							required: true,
 							controlStyle: 'width:5em',
-							validate: validatorNum( editor.lang.table.invalidRows ),
+							validate: CKEDITOR.dialog.validate.integer( editor.lang.table.invalidRows ),
 							setup: function( selectedElement ) {
 								this.setValue( selectedElement.$.rows.length );
 							},
@@ -278,7 +262,7 @@
 							label: editor.lang.table.columns,
 							required: true,
 							controlStyle: 'width:5em',
-							validate: validatorNum( editor.lang.table.invalidCols ),
+							validate: CKEDITOR.dialog.validate.integer( editor.lang.table.invalidCols ),
 							setup: function( selectedTable ) {
 								this.setValue( tableColumns( selectedTable ) );
 							},
